@@ -4,17 +4,39 @@ from time import sleep
         
 def checker():
     ### check if X has winning combination
-    if field[0]==x and field[1]==x and field[2]==x or field[3]==x and field[4]==x and field[5]==x or field[6]==x and field[7]==x and field[8]==x or field[0]==x and field[3]==x and field[6]==x or field[1]==x and field[4]==x and field[7]==x or field[2]==x and field[5]==x and field[8]==x or field[0]==x and field[4]==x and field[8]==x or field[2]==x and field[4]==x and field[6]==x:
+    if (
+        field[0]==x and field[1]==x and field[2]==x 
+     or field[3]==x and field[4]==x and field[5]==x 
+     or field[6]==x and field[7]==x and field[8]==x 
+     or field[0]==x and field[3]==x and field[6]==x 
+     or field[1]==x and field[4]==x and field[7]==x 
+     or field[2]==x and field[5]==x and field[8]==x 
+     or field[0]==x and field[4]==x and field[8]==x 
+     or field[2]==x and field[4]==x and field[6]==x
+        ):
+			
         print('Win X')
         fields()
         quit()
         return 1
+        
 	### check if O has winning combination
-    elif field[0]==o and field[1]==o and field[2]==o or field[3]==o and field[4]==o and field[5]==o or field[6]==o and field[7]==o and field[8]==o or field[0]==o and field[3]==o and field[6]==o or field[1]==o and field[4]==o and field[7]==o or field[2]==o and field[5]==o and field[8]==o or field[0]==o and field[4]==o and field[8]==o or field[2]==o and field[4]==o and field[6]==o:
+    elif (
+          field[0]==o and field[1]==o and field[2]==o 
+       or field[3]==o and field[4]==o and field[5]==o 
+       or field[6]==o and field[7]==o and field[8]==o 
+       or field[0]==o and field[3]==o and field[6]==o 
+       or field[1]==o and field[4]==o and field[7]==o 
+       or field[2]==o and field[5]==o and field[8]==o 
+       or field[0]==o and field[4]==o and field[8]==o 
+       or field[2]==o and field[4]==o and field[6]==o
+          ):
+			  
         print('Win O')
         fields()
         quit()
         return 1
+        
     elif i==8:
         print('Draw! To play - run game again!')
         fields()
@@ -33,10 +55,6 @@ def mes_chosen_char():
 def clear_terminal():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-def rand_start_player():
-    rand = randint(0, 1)
-    return rand
-
 def pc_move(field):
     rand = randint(0, 8)
     if field[rand] == str(rand+1):
@@ -49,7 +67,7 @@ o="o"
 
 field = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
 
-rand = rand_start_player()
+rand = randint(0, 1)
 clear_terminal()
 while True:
     start_question = input('Play with PC - 1; Play with another player - 2; Close game - 3: ')
@@ -144,4 +162,4 @@ while True:
         quit()
 
     else:
-        print("Value incorrect - choose only numbers from 1 do 3!")
+        print("Value incorrect - choose only numbers from 1 to 3!")
