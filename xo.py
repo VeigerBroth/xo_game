@@ -95,7 +95,7 @@ while True:
         while i<9:
             if start_question==1:
                 if rand_first_move == 1:
-                    i = i+1
+                    i+=1
                     if i == 0:
                         print('First move its PC!')
                         sleep(1)
