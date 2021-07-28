@@ -14,13 +14,13 @@ def checker():
      or field[0]==x and field[4]==x and field[8]==x 
      or field[2]==x and field[4]==x and field[6]==x
         ):
-			
+            
         print('Win X')
         fields()
         quit()
         return 1
         
-	### check if O has winning combination
+    ### check if O has winning combination
     elif (
           field[0]==o and field[1]==o and field[2]==o 
        or field[3]==o and field[4]==o and field[5]==o 
@@ -31,13 +31,13 @@ def checker():
        or field[0]==o and field[4]==o and field[8]==o 
        or field[2]==o and field[4]==o and field[6]==o
           ):
-			  
+              
         print('Win O')
         fields()
         quit()
         return 1
         
-    elif i==8:
+    elif i==9:
         print('Draw! To play - run game again!')
         fields()
         quit()
@@ -49,9 +49,6 @@ def fields():
     print('-'*5)
     print(field[6]+'|'+field[7]+'|'+field[8])
 
-def mes_chosen_char():
-    print("Char X or O was chosen.")
-
 def clear_terminal():
     os.system('cls' if os.name == 'nt' else 'clear')
 
@@ -62,104 +59,80 @@ def pc_move(field):
     else:
         pc_move(field)
         
+def enter_value(input_message, error_message, input_type_convertion, 
+                first_condition_value=None, second_condition_value=None):
+                    
+    while True:
+        try:
+            if input_type_convertion == int:
+                enter_value = int(input(input_message))
+                if enter_value <= first_condition_value \
+                and enter_value != second_condition_value:
+                    break
+                else:
+                    print(error_message)
+        except:
+            print(error_message)
+            
+    return enter_value
+        
 x="x"
 o="o"
 
 field = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
 
-rand = randint(0, 1)
+i=0
+
+rand_first_move = randint(0, 1)
+
 clear_terminal()
 while True:
-    start_question = input('Play with PC - 1; Play with another player - 2; Close game - 3: ')
-
-    try:
-        con_st_q = int(start_question)
-    except:
-        con_st_q = -1
-
-    if con_st_q == 2:
-        i=-1
-        while i<9:
-            i = i+1
-            fields()
-            if rand%2==0:
-                print('X move')
-            else:
-                print('O move')
+    start_question = enter_value('Play with PC - 1; '+
+    'Play with another player - 2; Close game - 3: ',
+    'Value incorrect - choose only numbers from 1 to 3!', int, 3, 0)
     
-            w = input("Choose field number: ")
-            
-            try:
-                q = int(w)
-            except:
-                q = -1
-            if q > 0 and q < 10:
-                if q==1 or q==2 or q==3 or q==4 or q==5 or q==6 or q==7 or q==8 or q==9:
-                    if field[q-1] == str(q):
-                        if rand%2==0:
-                            rand = rand+1
-                            field[q-1]=x
-                            if checker() == 1:
-                                break
-                        else:
-                            rand = rand-1
-                            field[q-1]=o
-                            if checker() == 1:
-                                break
+    if start_question==1 or start_question==2:
+        while i<9:
+            if start_question==1:
+                if rand_first_move == 1:
+                    i = i+1
+                    if i == 0:
+                        print('First move its PC!')
+                        sleep(1)
                     else:
-                        mes_chosen_char()
-                        i = i-1
-                else:
-                    i = i-1
-                    print("Value incorrect - choose only numbers from 1 to 9!")
-
-    elif con_st_q == 1:
-        i = -1
-        while i < 10:
-            if rand == 1:
-                i = i+1
-                if i == 0:
-                    print('First move its PC!')
-                    sleep(1)
-                else:
-                    print('PC move!')
-                    sleep(1)
-                rand = rand-1
-                pc_move(field)
-                if checker() == 1:
-                    break
-                
-            else:
-                i = i+1
+                        print('PC move!')
+                        sleep(1)
+                    rand_first_move-=1
+                    pc_move(field)
+                    if checker() == 1:
+                        break
+                        
+            if (rand_first_move==0 and start_question==1) or start_question==2:
+                i+=1
                 fields()
-                print('Now its player move!')
-                sleep(1)
-                move = input('Choose your move: ')
-        
-                try:
-                    q = int(move)
-                
-                except:
-                    q = -1
-                if q > 0 and q < 10:
-                    if q==1 or q==2 or q==3 or q==4 or q==5 or q==6 or q==7 or q==8 or q==9:
-                        if field[q-1] == str(q):
-                            rand = rand+1
-                            field[q-1] = x
-                            if checker() == 1:
-                                break
-                        else:
-                            mes_chosen_char()
-                            i = i-1
-                            
+                if rand_first_move%2==0:
+                    print('X move')
                 else:
-                    print('Value incorrect - choose only numbers from 1 to 9!')
-                    i = i-1
-            
-        quit()
-        
-    elif con_st_q == 3:
-        quit()
+                    print('O move')
 
-    else:
-        print("Value incorrect - choose only numbers from 1 to 3!")
+                move = enter_value('Choose your move: ',
+                'Value incorrect - choose only numbers from 1 to 9!', int, 9, 0)
+
+                if field[move-1] == str(move):
+                    if (start_question==2 and rand_first_move==1):
+                        rand_first_move-=1
+                        field[move-1] = o
+                        if checker() == 1:
+                            break
+                    else:
+                        rand_first_move+=1
+                        field[move-1] = x
+                        if checker() == 1:
+                            break
+                else:
+                    print('Char X or O was chosen!')
+                    i-=1
+                
+                     
+    elif start_question==3:
+        quit()
