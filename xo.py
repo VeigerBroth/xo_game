@@ -93,21 +93,16 @@ while True:
     
     if start_question==1 or start_question==2:
         while i<9:
-            if start_question==1:
-                if rand_first_move == 1:
-                    i+=1
-                    if i == 0:
-                        print('First move its PC!')
-                        sleep(1)
-                    else:
-                        print('PC move!')
-                        sleep(1)
-                    rand_first_move-=1
-                    pc_move(field)
-                    if checker() == 1:
-                        break
+            if (start_question==1 and rand_first_move==1):
+                i+=1
+                print('PC move!')
+                sleep(1)
+                rand_first_move-=1
+                pc_move(field)
+                if checker() == 1:
+                    break
                         
-            if (rand_first_move==0 and start_question==1) or start_question==2:
+            elif (rand_first_move==0 and start_question==1) or start_question==2:
                 i+=1
                 fields()
                 if rand_first_move%2==0:
